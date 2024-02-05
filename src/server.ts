@@ -1,18 +1,21 @@
 import Fastify from 'fastify'
+import { PlacesRouter } from './modules/places/places.router'
 
-const fastify = Fastify({
+const server = Fastify({
   logger: true,
 })
 
-fastify.get('/', async (request, reply) => {
-  return { hello: 'world' }
+server.get('/healthcheck', async () => {
+  return { status: 'OK' }
 })
 
 const start = async () => {
+  server.register(PlacesRouter, { prefix: 'api/places' })
+
   try {
-    await fastify.listen({ port: 3333 })
+    await server.listen({ port: 3333, host: '0.0.0.0' })
   } catch (err) {
-    fastify.log.error(err)
+    server.log.error(err)
     process.exit(1)
   }
 }
