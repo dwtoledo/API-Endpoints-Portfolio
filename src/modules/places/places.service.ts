@@ -9,16 +9,17 @@ export async function getPlaceAutoComplete(
   response: FastifyReply,
 ) {
   try {
-    const input = request.query.q
+    const query = request.query.q
     const autocomplete = await axios.get(
-      'https://maps.googleapis.com/maps/api/place/autocomplete/json',
+      'http://dev.virtualearth.net/REST/v1/Autosuggest',
       {
         params: {
-          input,
-          types: '(cities)',
-          language: 'pt_BR',
-          components: 'country:BR',
-          key: process.env.GOOGLE_API_KEY,
+          query,
+          maxResults: 10,
+          includeEntityTypes: 'Place',
+          culture: 'pt-BR',
+          countryFilter: 'BR',
+          key: process.env.BING_API_KEY,
         },
       },
     )
