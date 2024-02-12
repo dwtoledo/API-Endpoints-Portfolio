@@ -1,8 +1,8 @@
 import { FastifyReply } from 'fastify'
-import { PlaceAutoCompleteRequest } from './models/places.auto-complete'
 
 import axios from 'axios'
 import 'dotenv/config'
+import { PlaceAutoCompleteRequest } from './places.schema'
 
 export async function getPlaceAutoComplete(
   request: PlaceAutoCompleteRequest,

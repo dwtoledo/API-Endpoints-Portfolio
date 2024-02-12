@@ -1,6 +1,6 @@
 import { FastifyReply } from 'fastify'
 import { getPlaceAutoComplete } from './places.service'
-import { PlaceAutoCompleteRequest } from './models/places.auto-complete'
+import { PlaceAutoCompleteRequest } from './places.schema'
 
 export async function placeAutoCompleteHandler(
   request: PlaceAutoCompleteRequest,
