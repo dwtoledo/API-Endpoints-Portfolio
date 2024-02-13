@@ -9,23 +9,27 @@ export async function getPlaceAutoComplete(
   response: FastifyReply,
 ) {
   try {
-    const query = request.query.q
+    const query = request.query.query || ''
+    const maxResults = request.query.maxResults || 10
+    const culture = request.query.culture || 'pt-BR'
+    const countryFilter = request.query.countryFilter || 'BR'
+
     const autocomplete = await axios.get(
       'http://dev.virtualearth.net/REST/v1/Autosuggest',
       {
         params: {
           query,
-          maxResults: 10,
+          maxResults,
+          culture,
+          countryFilter,
           includeEntityTypes: 'Place',
-          culture: 'pt-BR',
-          countryFilter: 'BR',
           key: process.env.BING_API_KEY,
         },
       },
     )
     response
       .headers({ 'Access-Control-Allow-Origin': 'http://localhost:5173' })
-      .send(autocomplete.data)
+      .send(autocomplete.data.resourceSets[0].resources[0].value)
   } catch (error) {
     response.code(500).send(`Places Autocomplete ${error}`)
   }
