@@ -1,13 +1,15 @@
-import { FastifyReply, FastifyRequest } from 'fastify'
 import OpenAI from 'openai'
+import { FastifyReply } from 'fastify'
 import 'dotenv/config'
+
+import { CompletionsRequest } from './openai.schema'
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_KEY,
 })
 
 export async function OpenAIService(
-  request: FastifyRequest,
+  request: CompletionsRequest,
   response: FastifyReply,
 ) {
   try {
